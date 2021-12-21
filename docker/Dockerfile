@@ -45,19 +45,19 @@ COPY build_scripts/build_utils.sh /build_scripts/
 COPY build_scripts/install-autoconf.sh /build_scripts/
 RUN export AUTOCONF_ROOT=autoconf-2.71 && \
     export AUTOCONF_HASH=431075ad0bf529ef13cb41e9042c542381103e80015686222b8a9d4abef42a1c && \
-    export AUTOCONF_DOWNLOAD_URL=http://ftp.gnu.org/gnu/autoconf && \
+    export AUTOCONF_DOWNLOAD_URL=https://ftp.wayne.edu/gnu/autoconf && \
     manylinux-entrypoint /build_scripts/install-autoconf.sh
 
 COPY build_scripts/install-automake.sh /build_scripts/
 RUN export AUTOMAKE_ROOT=automake-1.16.5 && \
     export AUTOMAKE_HASH=07bd24ad08a64bc17250ce09ec56e921d6343903943e99ccf63bbf0705e34605 && \
-    export AUTOMAKE_DOWNLOAD_URL=http://ftp.gnu.org/gnu/automake && \
+    export AUTOMAKE_DOWNLOAD_URL=http://ftp.wayne.edu/gnu/automake && \
     manylinux-entrypoint /build_scripts/install-automake.sh
 
 COPY build_scripts/install-libtool.sh /build_scripts/
 RUN export LIBTOOL_ROOT=libtool-2.4.6 && \
     export LIBTOOL_HASH=e3bd4d5d3d025a36c21dd6af7ea818a2afcd4dfc1ea5a17b39d7854bcd0c06e3 && \
-    export LIBTOOL_DOWNLOAD_URL=http://ftp.gnu.org/gnu/libtool && \
+    export LIBTOOL_DOWNLOAD_URL=http://ftp.wayne.edu/gnu/libtool && \
     manylinux-entrypoint /build_scripts/install-libtool.sh
 
 COPY build_scripts/install-patchelf.sh /build_scripts/
@@ -169,6 +169,7 @@ COPY build_scripts/finalize.sh \
      build_scripts/requirements-base-tools.txt \
      /build_scripts/
 COPY build_scripts/requirements-tools/* /build_scripts/requirements-tools/
+
 RUN manylinux-entrypoint /build_scripts/finalize.sh && rm -rf /build_scripts
 
 ENV SSL_CERT_FILE=/opt/_internal/certs.pem

@@ -41,12 +41,15 @@ if [ "${AUDITWHEEL_POLICY}" == "manylinux2010" ]; then
 	LIBFFI_INCLUDEDIR=${LIBFFI_INCLUDEDIR:2}
 	cp ${LIBFFI_INCLUDEDIR}/ffi.h ${LIBFFI_INCLUDEDIR}/ffitarget.h /usr/include/
 fi
+
+# scrgiorgio: removed --disabled-shared= 
 # configure with hardening options only for the interpreter & stdlib C extensions
 # do not change the default for user built extension (yet?)
 ./configure \
 	CFLAGS_NODIST="${MANYLINUX_CFLAGS} ${MANYLINUX_CPPFLAGS}" \
 	LDFLAGS_NODIST="${MANYLINUX_LDFLAGS}" \
-	--prefix=${PREFIX} --disable-shared --with-ensurepip=no > /dev/null
+	LDFLAGS=-Wl,-rpath="/opt/_internal/cpython-${CPYTHON_VERSION}/lib" \
+	--prefix=${PREFIX} --enable-shared --with-ensurepip=no > /dev/null
 make > /dev/null
 make install > /dev/null
 if [ "${AUDITWHEEL_POLICY}" == "manylinux2010" ]; then
