@@ -12,15 +12,13 @@ export DOCKER_CLI_EXPERIMENTAL=enabled
 sudo docker login -u nsdf
 # type the TOKEN here
 
-# I am interested in these two 
+# I am interested in these 
+POLICY=manylinux2010 PLATFORM=x86_64   COMMIT_SHA=latest CI=true DOCKER_PREFIX=nsdf ./build.sh
 POLICY=manylinux2014 PLATFORM=x86_64   COMMIT_SHA=latest CI=true DOCKER_PREFIX=nsdf ./build.sh
 POLICY=manylinux2014 PLATFORM=aarch64  COMMIT_SHA=latest CI=true DOCKER_PREFIX=nsdf ./build.sh
 
+sudo docker push nsdf/manylinux2010_x86_64:latest
 sudo docker push nsdf/manylinux2014_x86_64:latest
 sudo docker push nsdf/manylinux2014_aarch64:latest
-
-docker manifest create nsdf/manylinux2014:latest --amend  nsdf/manylinux2014_x86_64:latest --amend nsdf/manylinux2014_aarch64:latest
-docker manifest inspect nsdf/manylinux2014:latest
-docker manifest push nsdf/manylinux2014:latest
 ```
 
